@@ -50,6 +50,7 @@ adapter.onGet('/api/listings').reply(
     // Gets all listings with optional filters
     const listings = getListings(params);
 
+
     // Maps over listings and adds location
     const domainListings = listings.map((listing) => {
       const location = getLocationById(listing.locationId);

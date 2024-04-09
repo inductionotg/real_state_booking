@@ -1,5 +1,6 @@
 import ListingCard from "./ListingCard"
 function ListingList({listings}){
+    console.log("listrings",listings)
     return (
         <div className="flex flex-wrap justify-center gap-4">
             {listings.length>0?

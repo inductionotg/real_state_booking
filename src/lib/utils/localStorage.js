@@ -9,9 +9,10 @@ export const setItem = (key, value) => {
 export const getItem = (key) => {
   try {
     const item = window.localStorage.getItem(key);
+    console.log(item,"jkj",key)
     return item ? JSON.parse(item) : undefined;
   } catch (error) {
-    console.log(error);
+    console.log("what",error);
   }
 };
 
