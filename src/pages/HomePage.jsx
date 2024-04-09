@@ -9,6 +9,12 @@ function HomePage(){
     const [listings,setListings] = useState([])
     const [isLoading,setLoading] = useState(true)
     const [error,setError] = useState(null)
+    const [filters,setFilters] = useState({
+        dates:undefined,
+        guests:0,
+        search:''
+
+    })
     console.log(api)
 
     useEffect(()=>{
@@ -17,7 +23,7 @@ function HomePage(){
             setLoading(true)
             setError(null)
             try {
-                const response = await api.get('/api/listings');
+                const response = await api.get('/api/listings',{params:filters});
                 setListings(response.data);
                 
             } catch (error) {
@@ -29,7 +35,7 @@ function HomePage(){
             }
         }
         fetchListings()
-    },[])
+    },[filters])
 
     /*
     Reading Reference for search Input
@@ -54,7 +60,9 @@ function HomePage(){
         }
         setListings(filteredListings)
     }*/
-    function handleChange(input){}
+    function handleChange(filters){
+        setFilters(filters)
+    }
     function renderListingList(){
         if(isLoading){
             return (
