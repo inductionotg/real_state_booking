@@ -4,23 +4,28 @@ import { useEffect, useState } from "react"
 import ListingFilters from "@/components/ListingFilters"
 import { Separator } from "@radix-ui/react-dropdown-menu"
 import api from '@/api'
+import { Spinner } from "@/components/ui"
 function HomePage(){
     const [listings,setListings] = useState([])
+    const [isLoading,setLoading] = useState(true)
+    const [error,setError] = useState(null)
     console.log(api)
 
     useEffect(()=>{
         console.log("effect")
         const fetchListings = async() =>{
+            setLoading(true)
+            setError(null)
             try {
-                console.log("effect")
                 const response = await api.get('/api/listings');
-                console.log("response")
                 setListings(response.data);
-                console.log("dsdsd",response.data)
-                setListings(response.data)
                 
             } catch (error) {
                 console.log(error)
+                setError("Something Went Wrong")
+            }
+            finally{
+                setLoading(false)
             }
         }
         fetchListings()
@@ -51,6 +56,17 @@ function HomePage(){
     }*/
     function handleChange(input){}
     function renderListingList(){
+        if(isLoading){
+            return (
+                <div className="flex justify-center">
+                    <Spinner sm="xl"/>
+                </div>
+            )
+        }
+        if(error){
+            <div>{error}</div>
+        }
+        return <ListingList listings={listings}/>
 
     }
     return (
@@ -59,8 +75,8 @@ function HomePage(){
                 <ListingFilters onChange={handleChange}/>
                 <Separator className="py-4"/>
             </div>
+            {renderListingList()}
             
-            <ListingList listings={listings}/>
         </div>
     )
 }
