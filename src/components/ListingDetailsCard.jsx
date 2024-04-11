@@ -6,10 +6,10 @@ function ListingDetailsCard({listing}){
     return(
         <Card className='mx-auto p-4'>
             <ListingDeatilsCardImages listing ={listing}/>
-            <Separator className="mb-5"/>
+            <Separator className="mb-6"/>
             <div className="flex flex-col gap-2">
                 <h1 className="mb-2 text-2xl font-bold">{listing.name}</h1>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 font-serif">
                     <DollarSign className="h-4 w-4 text-primary"/>
                     <span className="text-muted-foreground">
                         <span className="font-bold text-foreground">{listing.price}</span>
@@ -18,19 +18,19 @@ function ListingDetailsCard({listing}){
                 </div>
                 <div className="flex items-center gap-2">
                     <Pin className="h-4 w-4 text-primary"/>
-                    <span className="text-muted-foreground">
+                    <span className="text-muted-foreground font-bold">
                        {listing.location.name}
                     </span>
                 </div>
                 <div className="flex items-center gap-2">
                     <Users className="h-4 w-4 text-primary"/>
-                    <span className="text-muted-foreground">
+                    <span className="text-muted-foreground font-bold">
                        {listing.maxGuests} Guests
                     </span>
                 </div>
             </div>
             <Separator className="my-4"/>
-                <div className="whitespace-pre-line">
+                <div className="whitespace-pre-line text-xl">
                     {listing.description}
                 </div>
 
