@@ -1,11 +1,10 @@
 import ListingList from "@/components/ListingList"
-import { isListingAvailable, listings as staticListings } from "@/api/data/listings"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import ListingFilters from "@/components/ListingFilters"
 import { Separator } from "@radix-ui/react-dropdown-menu"
-import api from '@/api'
 import { Spinner } from "@/components/ui"
 import useFetch from "@/hooks/useFetch"
+import DataRender from "@/components/DataRender"
 function HomePage(){
    
     const [filters,setFilters] = useState({
@@ -14,7 +13,7 @@ function HomePage(){
         search:''
 
     })
-    const fetchOptions = useMemo(()=>{params:filters},[filters])
+    const fetchOptions = useMemo(()=>({params:filters}),[filters])
     const {listing,loading,error} = useFetch('/api/listings',fetchOptions)
 
     /*useEffect(()=>{
@@ -60,30 +59,19 @@ function HomePage(){
         }
         setListings(filteredListings)
     }*/
-    function handleChange(filters){
-        setFilters(filters)
-    }
-    function renderListingList(){
-        if(loading){
-            return (
-                <div className="flex justify-center">
-                    <Spinner sm="xl"/>
-                </div>
-            )
-        }
-        if(error){
-           return  <div>{error}</div>
-        }
-        return <ListingList listings={listing}/>
-
-    }
+    const handleChange = useCallback(function(filters) {
+        setFilters(filters);
+    }, []);
+   
     return (
         <div className="container py-4">
             <div className="mb-4">
                 <ListingFilters onChange={handleChange}/>
                 <Separator className="py-4"/>
             </div>
-            {renderListingList()}
+            <DataRender isLoading={loading} error={error}>
+                <ListingList listings={listing}/>
+            </DataRender>
             
         </div>
     )

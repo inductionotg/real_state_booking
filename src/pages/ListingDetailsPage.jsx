@@ -1,12 +1,8 @@
-import api from "@/api"
+
 import ListingDetailsCard from "@/components/ListingDetailsCard"
-import { Spinner } from "@/components/ui"
-import axios from "axios"
-import { useEffect } from "react"
-import { useRef } from "react"
-import { useState } from "react"
 import { useParams } from "react-router-dom"
 import useFetch from '../hooks/useFetch'
+import DataRender from "@/components/DataRender"
 function ListingDetailsPage(){
     const {listingId} = useParams()
    
@@ -42,7 +38,7 @@ function ListingDetailsPage(){
         }
     },[listingId])  
     */
-    const renderListing=()=>{
+    /*const renderListing=()=>{
         if(loading){
             return (
                 <div className="flex justify-center">
@@ -54,10 +50,12 @@ function ListingDetailsPage(){
             return <div className="text-center text-red-800 text-3xl">{error}</div>
         }
         return <ListingDetailsCard listing={listing}/>
-    }
+    }*/
     return (
         <div className="container py-4">
-            {renderListing()}
+             <DataRender isLoading={loading} error={error}>
+                <ListingDetailsCard listing={listing}/>
+            </DataRender>
         </div>
     )
 }

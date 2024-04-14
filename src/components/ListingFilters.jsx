@@ -3,7 +3,7 @@ import {Input} from '../components/ui/input'
 import {Stepper} from '../components/ui/Stepper'
 import {Button} from '../components/ui/button'
 import { Search } from 'lucide-react'
-import { useState } from 'react'
+import { useState,memo } from 'react'
 function ListingFilters({onChange}){
     const [dates,setDates] = useState()
     const [guests,setGuests] = useState(0)
@@ -33,4 +33,4 @@ function ListingFilters({onChange}){
         </div>
     )
 }
-export default ListingFilters
+export default memo(ListingFilters)
