@@ -6,16 +6,14 @@ import { useEffect } from "react"
 import { useRef } from "react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-
+import useFetch from '../hooks/useFetch'
 function ListingDetailsPage(){
     const {listingId} = useParams()
-    const [listing,setListing] = useState()
-    const [error,setError]  = useState(null)
-    const [loading,setLoading] = useState(true)
+   
+    const {listing,error,loading} = useFetch(`/api/listings/${listingId}`)
+    console.log(listing)
 
-    const abortController  = useRef(null)
-
-    useEffect(()=>{
+    /*useEffect(()=>{
 
         async function fetchDetailListing(){
             setLoading(true)
@@ -42,8 +40,8 @@ function ListingDetailsPage(){
         return ()=>{
             abortController.current?.abort()
         }
-    },[listingId])
-
+    },[listingId])  
+    */
     const renderListing=()=>{
         if(loading){
             return (

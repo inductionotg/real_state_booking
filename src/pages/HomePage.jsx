@@ -1,23 +1,23 @@
 import ListingList from "@/components/ListingList"
 import { isListingAvailable, listings as staticListings } from "@/api/data/listings"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import ListingFilters from "@/components/ListingFilters"
 import { Separator } from "@radix-ui/react-dropdown-menu"
 import api from '@/api'
 import { Spinner } from "@/components/ui"
+import useFetch from "@/hooks/useFetch"
 function HomePage(){
-    const [listings,setListings] = useState([])
-    const [isLoading,setLoading] = useState(true)
-    const [error,setError] = useState(null)
+   
     const [filters,setFilters] = useState({
         dates:undefined,
         guests:0,
         search:''
 
     })
-    console.log(api)
+    const fetchOptions = useMemo(()=>{params:filters},[filters])
+    const {listing,loading,error} = useFetch('/api/listings',fetchOptions)
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         console.log("effect")
         const fetchListings = async() =>{
             setLoading(true)
@@ -35,7 +35,7 @@ function HomePage(){
             }
         }
         fetchListings()
-    },[filters])
+    },[filters])*/
 
     /*
     Reading Reference for search Input
@@ -64,7 +64,7 @@ function HomePage(){
         setFilters(filters)
     }
     function renderListingList(){
-        if(isLoading){
+        if(loading){
             return (
                 <div className="flex justify-center">
                     <Spinner sm="xl"/>
@@ -72,9 +72,9 @@ function HomePage(){
             )
         }
         if(error){
-            <div>{error}</div>
+           return  <div>{error}</div>
         }
-        return <ListingList listings={listings}/>
+        return <ListingList listings={listing}/>
 
     }
     return (

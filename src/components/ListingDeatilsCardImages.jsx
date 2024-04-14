@@ -24,6 +24,7 @@ function ListingDeatilsCardImages({listing})
                                 className="basis-1/3 cursor-pointer"
                                 onClick={()=>setCurrentImageIndex(index)}
                                 isSelected={index === currentImageIndex}
+                                key={index}
                             >
                                 <img
                                     src={getImageUrl(image)}
