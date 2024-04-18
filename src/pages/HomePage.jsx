@@ -1,10 +1,11 @@
 import ListingList from "@/components/ListingList"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import ListingFilters from "@/components/ListingFilters"
 import { Separator } from "@radix-ui/react-dropdown-menu"
-import { Spinner } from "@/components/ui"
-import useFetch from "@/hooks/useFetch"
 import DataRender from "@/components/DataRender"
+import { useSelector,useDispatch } from "react-redux"
+import {fetchListings} from '../state/listingSlice'
+
 function HomePage(){
    
     const [filters,setFilters] = useState({
@@ -13,9 +14,20 @@ function HomePage(){
         search:''
 
     })
+    const {listings,error,status} = useSelector((state)=>state.listings)
+    const dispatch = useDispatch()
     const fetchOptions = useMemo(()=>({params:filters}),[filters])
-    const {listing,loading,error} = useFetch('/api/listings',fetchOptions)
+    useEffect(()=>{
+        const request = dispatch(fetchListings(fetchOptions))
 
+        return ()=>{
+            request.abort()
+        }
+    },[dispatch,fetchOptions])
+    /*
+    commenting this custome hook for fetch as we are using createAsyncThunk for fetching 
+    const {listing,loading,error} = useFetch('/api/listings',fetchOptions)
+    */
     /*useEffect(()=>{
         console.log("effect")
         const fetchListings = async() =>{
@@ -69,8 +81,8 @@ function HomePage(){
                 <ListingFilters onChange={handleChange}/>
                 <Separator className="py-4"/>
             </div>
-            <DataRender isLoading={loading} error={error}>
-                <ListingList listings={listing}/>
+            <DataRender isLoading={status==='loading'} error={error}>
+                <ListingList listings={listings}/>
             </DataRender>
             
         </div>

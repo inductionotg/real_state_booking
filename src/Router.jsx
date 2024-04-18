@@ -3,6 +3,7 @@ import App from './App'
 import HomePage from './pages/HomePage'
 import ListingDetailsPage from './pages/ListingDetailsPage'
 import NotFoundPage from './pages/NotFoundPages'
+import FavoriteListingsPage from './pages/FavoriteListingsPage'
 const router  = createBrowserRouter([
     {
         path:'/',
@@ -16,6 +17,10 @@ const router  = createBrowserRouter([
             {
                 path:'/listings/:listingId',
                 element:<ListingDetailsPage/>
+            }, 
+            {
+                path:'/favorites',
+                element:<FavoriteListingsPage/>
             }
         ]
     }
