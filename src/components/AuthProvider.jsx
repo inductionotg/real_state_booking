@@ -1,6 +1,6 @@
-const { default: api } = require("@/api")
-const { createContext, useContext, useState, useEffect } = require("react")
 
+import { createContext, useContext, useState, useEffect }from "react"
+import api from "@/api";
 const AuthContext  = createContext(undefined)
 
 const useAuth = ()=>{
@@ -27,7 +27,7 @@ const AuthProvider =({children})=>{
 
     },[])
     return (
-        <AuthContext.Provider values={{token,setToken}}>
+        <AuthContext.Provider value={{token,setToken}}>
             {children}
         </AuthContext.Provider>
     )

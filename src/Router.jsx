@@ -4,12 +4,17 @@ import HomePage from './pages/HomePage'
 import ListingDetailsPage from './pages/ListingDetailsPage'
 import NotFoundPage from './pages/NotFoundPages'
 import FavoriteListingsPage from './pages/FavoriteListingsPage'
+import SignInPage from './components/SignInPage'
 const router  = createBrowserRouter([
     {
         path:'/',
         element:<App/>,
         errorElement:<NotFoundPage/>,
         children:[
+            {
+                path:'/signin',
+                element:<SignInPage/>
+            },
             {
                 path:'/',
                 element:<HomePage/>
